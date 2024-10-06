@@ -4,6 +4,7 @@ import com.example.sprint_boot_rest.model.JobPost;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -107,5 +108,35 @@ public class JobRepo {
 
     public List<JobPost> getAllJobs(){
         return jobs;
+    }
+
+    public JobPost getJob(int jobID){
+        for(JobPost job: jobs){
+            if(job.getPostId() == jobID) return job;
+        }
+
+        return null;
+    }
+
+    public void updateJob(JobPost jobPost){
+        for(JobPost job: jobs){
+            if(job.getPostId() == jobPost.getPostId()){
+                job.setPostDesc(jobPost.getPostDesc());
+                job.setPostProfile(jobPost.getPostProfile());
+                job.setReqExperience(jobPost.getReqExperience());
+                job.setPostTechStack(jobPost.getPostTechStack());
+            }
+        }
+    }
+
+    public void deleteJob(int jobID){
+        Iterator<JobPost> iterator = jobs.iterator();
+
+        while(iterator.hasNext()){
+            JobPost job = iterator.next();
+            if(job.getPostId() == jobID){
+                iterator.remove();
+            }
+        }
     }
 }
